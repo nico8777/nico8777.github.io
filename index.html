@@ -3,34 +3,250 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NicolaLaMattina • Developer Android</title>
+  <title>Nicola La Mattina – Developer Android</title>
+  <meta name="description" content="Sviluppo app Android. Trova Auto: salva la posizione, condividi foto/coordinate, percorsi guidati, parchimetro con avvisi." />
+  <link rel="icon" href="/assets/icon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nicola La Mattina – Developer Android" />
+  <meta property="og:description" content="Trova Auto: salva la posizione, condividi foto/coordinate, percorsi guidati, parchimetro." />
+  <meta property="og:image" content="https://nico8777.github.io/assets/cover.jpg" />
+  <meta property="og:url" content="https://nico8777.github.io/" />
+  <meta property="og:type" content="website" />
+
+  <!-- SEO -->
+  <meta name="theme-color" content="#0ea5e9" />
+
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; line-height: 1.6; }
-    h1 { margin-bottom: .25rem; }
-    a { color: #0b57d0; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .card { border: 1px solid #e2e2e2; border-radius: 12px; padding: 1rem 1.25rem; max-width: 740px; }
-    ul { margin: .25rem 0 1rem 1.25rem; }
+    :root{
+      --bg: #0b1020;
+      --card: #121a33;
+      --muted: #a7b0c2;
+      --text: #f7f9ff;
+      --acc: #00d4ff;        /* ciano */
+      --acc-2:#7c3aed;       /* viola */
+      --ring:#3b82f6;        /* blu */
+    }
+    *{ box-sizing:border-box }
+    html,body{ margin:0; padding:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    a{ color:inherit; text-decoration:none }
+    img{ max-width:100%; display:block }
+    .container{ width:min(1080px, 92vw); margin-inline:auto; }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:40;
+      background: linear-gradient(180deg, rgba(11,16,32,.8), rgba(11,16,32,.4));
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 0; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.3px }
+    .brand img{ width:36px; height:36px; border-radius:10px; border:1px solid rgba(255,255,255,.15) }
+    .nav .links{ display:flex; gap:14px; }
+    .chip{ background:rgba(255,255,255,.06); padding:8px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08) }
+    .chip:hover{ border-color:rgba(255,255,255,.18) }
+
+    /* Hero */
+    .hero{
+      position:relative; overflow:hidden; padding: clamp(48px, 10vw, 88px) 0;
+      background:
+        radial-gradient(60% 60% at 85% -10%, rgba(0,212,255,.25) 0, transparent 60%),
+        radial-gradient(45% 45% at -5% 10%, rgba(124,58,237,.25) 0, transparent 60%);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .hero-grid{ display:grid; grid-template-columns: 1.2fr .8fr; gap:36px; align-items:center; }
+    @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+    .title{ font-size: clamp(32px, 5vw, 46px); line-height:1.15; margin:0 0 12px }
+    .subtitle{ color:var(--muted); font-size: clamp(16px, 1.8vw, 18px); margin:0 0 24px }
+    .cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; font-weight:600;
+      background: linear-gradient(90deg, var(--acc), var(--acc-2));
+      color:#051018; padding:12px 16px; border-radius:12px; border:none; box-shadow: 0 10px 24px rgba(0,212,255,.22);
+    }
+    .btn svg{ width:18px; height:18px }
+    .btn.sec{ background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.15); box-shadow:none }
+    .tagline{ display:inline-flex; gap:8px; align-items:center; color:var(--muted); font-size:14px }
+    .tagline .dot{ width:8px; height:8px; background:var(--ring); border-radius:999px; box-shadow:0 0 0 6px rgba(59,130,246,.16) }
+
+    /* Card Showcase */
+    .device-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px; padding:16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+    .device{ aspect-ratio: 10/17; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.12); background:#0d1428 }
+    .device img{ width:100%; height:100%; object-fit:cover }
+
+    /* Features */
+    section{ padding: clamp(40px, 9vw, 76px) 0 }
+    .section-title{ font-size: clamp(22px, 3.6vw, 30px); margin:0 0 12px }
+    .section-sub{ color:var(--muted); margin:0 0 28px }
+    .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px }
+    @media (max-width:900px){ .grid-3{ grid-template-columns:1fr; } }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px; padding:18px;
+    }
+    .card h3{ margin:8px 0 8px; font-size:18px }
+    .muted{ color:var(--muted) }
+
+    /* Gallery */
+    .gallery{ display:grid; grid-template-columns:repeat(3, 1fr); gap:16px }
+    @media (max-width:900px){ .gallery{ grid-template-columns:1fr 1fr } }
+    .shot{ border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.1); background:#0d1428; aspect-ratio: 9/16 }
+
+    /* Footer */
+    footer{ border-top:1px solid rgba(255,255,255,.08); padding:18px 0; color:var(--muted); font-size:14px }
+    .foot{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap }
+    .links a{ color:var(--muted); margin-right:14px }
+    .links a:hover{ color:var(--text) }
   </style>
 </head>
 <body>
-  <h1>Nicola La Mattina</h1>
-  <p>Developer Android • Palermo (IT)</p>
 
-  <div class="card">
-    <h2>Trova Auto</h2>
-    <ul>
-      <li><a href="https://play.google.com/store/apps/details?id=it.trovaauto" target="_blank" rel="noopener">Scheda su Google Play</a></li>
-      <li><a href="https://nico8777.github.io/trovaauto-site/" target="_blank" rel="noopener">Sito / Privacy Policy (IT/EN/DE)</a></li>
-      <li><a href="/app-ads.txt" target="_blank" rel="noopener">app-ads.txt</a></li>
-    </ul>
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="/assets/icon.png" alt="Icona" />
+        <div>Nicola La Mattina</div>
+      </div>
+      <nav class="links">
+        <a class="chip" href="#trovaauto">Trova Auto</a>
+        <a class="chip" href="#privacy">Privacy</a>
+        <a class="chip" href="#contatti">Contatti</a>
+      </nav>
+    </div>
+  </header>
 
-    <h3>Contatti</h3>
-    <ul>
-      <li>Email: <a href="mailto:nicolalamattina24@gmail.com">nicolalamattina24@gmail.com</a></li>
-    </ul>
-  </div>
+  <!-- HERO -->
+  <section class="hero" id="trovaauto">
+    <div class="container hero-grid">
+      <div>
+        <div class="tagline"><span class="dot"></span> Developer Android • Palermo (IT)</div>
+        <h1 class="title">Trova Auto<br/>Salva, condividi e ritrova in pochi tap</h1>
+        <p class="subtitle">
+          Scatta una foto, salva la posizione GPS con precisione, ricevi il percorso guidato e imposta il parchimetro con avvisi.
+        </p>
 
-  <p style="margin-top: 2rem; color:#666">© 2025 Nicola La Mattina</p>
+        <div class="cta">
+          <a class="btn" href="https://play.google.com/store/apps/details?id=it.trovaauto" target="_blank" rel="noopener">
+            <!-- play icon -->
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17l12 8.5-12 8.5zm13.5-8.5L21 9v6l-4.5-3z"/></svg>
+            Scarica su Google Play
+          </a>
+          <a class="btn sec" href="#privacy">Informativa & Sito</a>
+        </div>
+      </div>
+
+      <div class="device-card">
+        <div class="device">
+          <!-- Sostituisci con uno screenshot reale -->
+          <img src="/assets/screen1.jpg" alt="Screenshot Trova Auto" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Funzioni principali</h2>
+      <p class="section-sub">Pensata per parcheggi affollati, viaggi in città o eventi: tutto a portata di tap.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Salvataggi rapidi</h3>
+          <p class="muted">Foto + coordinate GPS con precisione; fino a 3 posizioni nella versione base.</p>
+        </div>
+        <div class="card">
+          <h3>Percorsi guidati</h3>
+          <p class="muted">Apri subito la navigazione a piedi o in auto fino al punto esatto.</p>
+        </div>
+        <div class="card">
+          <h3>Parchimetro</h3>
+          <p class="muted">Timer 1–12 ore con doppio avviso: 10 minuti prima e alla scadenza.</p>
+        </div>
+        <div class="card">
+          <h3>Condivisione completa</h3>
+          <p class="muted">Invia foto + link Maps via WhatsApp, Messenger, email, social.</p>
+        </div>
+        <div class="card">
+          <h3>Storico & dettagli</h3>
+          <p class="muted">Miniature, data/ora, modalità di spostamento, precisione del fix.</p>
+        </div>
+        <div class="card">
+          <h3>Multilingua</h3>
+          <p class="muted">Italiano, Inglese e Tedesco; UI chiara e adatta a una mano.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Screenshot</h2>
+      <p class="section-sub">Un’anteprima rapida dell’app.</p>
+      <div class="gallery">
+        <div class="shot"><img src="/assets/screen1.jpg" alt="Screen 1"></div>
+        <div class="shot"><img src="/assets/screen2.jpg" alt="Screen 2"></div>
+        <div class="shot"><img src="/assets/screen3.jpg" alt="Screen 3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY / LINKS -->
+  <section id="privacy">
+    <div class="container">
+      <h2 class="section-title">Sito & Privacy</h2>
+      <p class="section-sub">Tutte le informazioni ufficiali.</p>
+      <div class="grid-3">
+        <a class="card" href="https://nico8777.github.io/trovaauto-site/" target="_blank" rel="noopener">
+          <h3>Sito Trova Auto</h3>
+          <p class="muted">Hub con policy localizzate (IT/EN/DE).</p>
+        </a>
+        <a class="card" href="https://nico8777.github.io/trovaauto-site/privacy-it.html" target="_blank" rel="noopener">
+          <h3>Privacy (IT)</h3>
+          <p class="muted">Versione italiana dell’informativa.</p>
+        </a>
+        <a class="card" href="https://nico8777.github.io/app-ads.txt" target="_blank" rel="noopener">
+          <h3>app-ads.txt</h3>
+          <p class="muted">File pubblicitario conforme IAB (AdMob).</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contatti">
+    <div class="container">
+      <h2 class="section-title">Contatti</h2>
+      <p class="section-sub">Per richieste, supporto o collaborazioni.</p>
+      <div class="card">
+        <p class="muted">Email: <a href="mailto:nicolalamattina24@gmail.com">nicolalamattina24@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container foot">
+      <div>© <span id="y"></span> Nicola La Mattina</div>
+      <div class="links">
+        <a href="https://play.google.com/store/apps/details?id=it.trovaauto" target="_blank" rel="noopener">Google Play</a>
+        <a href="https://nico8777.github.io/trovaauto-site/" target="_blank" rel="noopener">Sito/Privacy</a>
+        <a href="https://nico8777.github.io/app-ads.txt" target="_blank" rel="noopener">app-ads.txt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
